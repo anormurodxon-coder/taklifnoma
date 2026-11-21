@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maxsus Taklifnoma — Uchrashuv</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-deep: #11050C;
+      --bg-card: rgba(34, 11, 24, 0.68);
+      --rose-primary: #ff3e7f;
+      --rose-light: #ff85ad;
+      --rose-soft: #ffd1e0;
+      --gold-accent: #f3c68f;
+      --text-main: #fff5f8;
+      --text-muted: rgba(255, 224, 235, 0.74);
+      --border-glass: rgba(255, 133, 173, 0.25);
+      --shadow-glow: 0 25px 65px rgba(255, 42, 116, 0.22), 0 0 35px rgba(243, 198, 143, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(circle at 18% 20%, rgba(255, 62, 127, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 82% 78%, rgba(243, 198, 143, 0.14) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #240917 0%, #0d0308 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* Animated Floating Canvas Background */
+    #romantic-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient Glow Orbs */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 340px;
+      height: 340px;
+      background: rgba(255, 51, 119, 0.22);
+      top: -80px;
+      left: -80px;
+    }
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: rgba(243, 198, 143, 0.14);
+      bottom: -120px;
+      right: -100px;
+      animation-delay: -6s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(35px, 25px) scale(1.12); }
+    }
+
+    /* Sound Toggle Button */
+    .music-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 20;
+      background: rgba(34, 11, 24, 0.7);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      color: var(--rose-soft);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    }
+    .music-btn:hover {
+      border-color: var(--rose-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 62, 127, 0.28);
+    }
+    .music-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+    .music-bars span {
+      width: 2.5px;
+      background: var(--rose-primary);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+    .music-btn.playing .music-bars span:nth-child(1) { animation: eq 0.8s ease-in-out infinite; }
+    .music-btn.playing .music-bars span:nth-child(2) { animation: eq 0.6s ease-in-out infinite 0.2s; }
+    .music-btn.playing .music-bars span:nth-child(3) { animation: eq 0.9s ease-in-out infinite 0.4s; }
+
+    @keyframes eq {
+      0%, 100% { height: 3px; }
+      50% { height: 12px; }
+    }
+
+    /* Main Wrapper & Glass Card */
+    .stage-container {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      max-width: 520px;
+      perspective: 1200px;
+    }
+
+    .romantic-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--border-glass);
+      border-radius: 30px;
+      padding: 46px 38px;
+      box-shadow: var(--shadow-glow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .romantic-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose-light), var(--gold-accent), transparent);
+      opacity: 0.75;
+    }
+
+    /* Decorative Top Emblem */
+    .crest-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 62, 127, 0.24) 0%, rgba(34, 11, 24, 0.5) 100%);
+      border: 1px solid rgba(255, 133, 173, 0.35);
+      margin-bottom: 22px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255, 62, 127, 0.35);
+      animation: pulseHeart 2.4s infinite ease-in-out;
+    }
+
+    .crest-badge svg {
+      width: 34px;
+      height: 34px;
+      fill: url(#roseGoldGrad);
+      filter: drop-shadow(0 2px 8px rgba(255, 62, 127, 0.6));
+    }
+
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 62, 127, 0.3); }
+      50% { transform: scale(1.07); box-shadow: 0 0 42px rgba(255, 62, 127, 0.55); }
+    }
+
+    .subtitle-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold-accent);
+      background: rgba(243, 198, 143, 0.1);
+      border: 1px solid rgba(243, 198, 143, 0.25);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    h1, h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 2.35rem;
+      line-height: 1.22;
+      color: #ffffff;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .lead-text {
+      font-size: 1.04rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 28px;
+      width: 75%;
+      opacity: 0.65;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+    }
+    .ornament-divider span {
+      color: var(--gold-accent);
+      font-size: 0.9rem;
+    }
+
+    /* Window Sections */
+    .window-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(18px) scale(0.97);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .window-panel.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      animation: panelAppear 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes panelAppear {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 36px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 0.4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff2e77 0%, #ff6b9d 55%, #f3a68f 100%);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(255, 46, 119, 0.42);
+      min-width: 145px;
+    }
+    .btn-yes:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 18px 36px rgba(255, 46, 119, 0.6);
+    }
+    .btn-yes:active:not(:disabled) {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--rose-soft);
+      border: 1px solid rgba(255, 133, 173, 0.3);
+      min-width: 145px;
+    }
+    .btn-no:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 133, 173, 0.55);
+      transform: translateY(-2px);
+    }
+
+    /* Form Controls in Window 2 */
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--rose-soft);
+      margin-bottom: 9px;
+      letter-spacing: 0.3px;
+    }
+
+    .form-label span.icon {
+      color: var(--gold-accent);
+      font-size: 1.05rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .romantic-input {
+      width: 100%;
+      background: rgba(17, 5, 12, 0.65);
+      border: 1px solid rgba(255, 133, 173, 0.3);
+      border-radius: 16px;
+      padding: 14px 18px;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.96rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .romantic-input::placeholder {
+      color: rgba(255, 209, 224, 0.38);
+    }
+
+    .romantic-input:focus {
+      border-color: var(--rose-primary);
+      background: rgba(28, 8, 19, 0.85);
+      box-shadow: 0 0 0 4px rgba(255, 62, 127, 0.16);
+    }
+
+    /* Quick Suggestion Chips */
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
+    }
+    .chip {
+      font-size: 0.76rem;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 133, 173, 0.1);
+      border: 1px solid rgba(255, 133, 173, 0.22);
+      color: var(--rose-soft);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .chip:hover {
+      background: rgba(255, 62, 127, 0.25);
+      border-color: var(--rose-light);
+      color: #fff;
+    }
+
+    .error-msg {
+      color: #ff8096;
+      font-size: 0.82rem;
+      margin-top: -6px;
+      margin-bottom: 14px;
+      display: none;
+      text-align: left;
+    }
+
+    /* Window 3 Summary Details Box */
+    .summary-card {
+      background: rgba(17, 5, 12, 0.58);
+      border: 1px solid rgba(243, 198, 143, 0.32);
+      border-radius: 20px;
+      padding: 20px 22px;
+      margin: 24px 0 28px;
+      text-align: left;
+      position: relative;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+    }
+    .summary-row + .summary-row {
+      border-top: 1px dashed rgba(255, 133, 173, 0.2);
+      margin-top: 6px;
+      padding-top: 14px;
+    }
+    .summary-icon {
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+    .summary-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--gold-accent);
+      margin-bottom: 2px;
+    }
+    .summary-val {
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 0.84rem;
+      color: rgba(255, 209, 224, 0.55);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: color 0.25s;
+    }
+    .back-link:hover {
+      color: var(--rose-light);
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .romantic-card {
+        padding: 36px 24px;
+        border-radius: 24px;
+      }
+      h1, h2 {
+        font-size: 1.95rem;
+      }
+      .btn-group {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden SVG Gradients -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="roseGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff3e7f" />
+        <stop offset="50%" stop-color="#ff85ad" />
+        <stop offset="100%" stop-color="#f3c68f" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Ambient Glows & Floating Hearts/Petals Canvas -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <canvas id="romantic-canvas"></canvas>
+
+  <!-- Gentle Romantic Melody Toggle (Web Audio API) -->
+  <button class="music-btn" id="musicToggle" title="Romantik ohangni yoqish">
+    <div class="music-bars">
+      <span></span><span></span><span></span>
+    </div>
+    <span id="musicLabel">Ohang</span>
+  </button>
+
+  <main class="stage-container">
+    <div class="romantic-card">
+
+      <!-- ==================== 1-OYNA: TAKLIFNOMA ==================== -->
+      <section id="window-1" class="window-panel active">
+        <div class="crest-badge">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <div><span class="subtitle-tag">✨ Maxsus Taklifnoma ✨</span></div>
+
+        <h1>Sizni ma'lum bir shaxs uchrashuvga taklif qilmoqda</h1>
+
+        <div class="ornament-divider"><span>❦</span></div>
+
+        <p class="lead-text">
+          Unutilmas lahzalar, samimiy suhbat va yoqimli oqshomni birgalikda o'tkazishga rozimisiz?
+        </p>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-yes" id="btnYes">
+            <span>❤️ Ha</span>
+          </button>
+          <button type="button" class="btn btn-no" id="btnNo">
+            <span>Yo'q</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== "YO'Q" BOSILGANDAGI OYNA ==================== -->
+      <section id="window-no" class="window-panel">
+        <div class="crest-badge">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+          </svg>
+        </div>
+
+        <div><span class="subtitle-tag">🌸 Samimiyat bilan 🌸</span></div>
+
+        <h2>E'tibor berganingiz uchun rahmat!</h2>
+
+        <div class="ornament-divider"><span>❦</span></div>
+
+        <p class="lead-text">
+          Javobingizni hurmat qilamiz. Har bir kuningiz quvonch, mehr va go'zal lahzalarga to'la bo'lsin!
+        </p>
+
+        <button type="button" class="back-link" id="btnBackToStart">
+          ← Fikrim o'zgardi, taklifnomaga qaytish
+        </button>
+      </section>
+
+      <!-- ==================== 2-OYNA: QAYERDA VA QACHON ==================== -->
+      <section id="window-2" class="window-panel">
+        <div class="crest-badge">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z"/>
+          </svg>
+        </div>
+
+        <div><span class="subtitle-tag">🌹 Uchrashuv Tafsilotlari 🌹</span></div>
+
+        <h2>Qayerda va qachon?</h2>
+
+        <div class="ornament-divider"><span>❦</span></div>
+
+        <p class="lead-text" style="margin-bottom: 22px;">
+          Ismingiz hamda o'zingizga ma'qul joy va vaqtni yozib qoldiring:
+        </p>
+
+        <form id="dateForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="whoInput">
+              <span class="icon">👤</span> Ismingiz (yoki kimdan)
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="whoInput"
+                class="romantic-input"
+                placeholder="Ismingizni yozing..."
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="whereInput">
+              <span class="icon">📍</span> Qayerda uchrashamiz?
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="whereInput"
+                class="romantic-input"
+                placeholder="Masalan: Shinam qahvaxona, restoran yoki bog'..."
+                required
+              />
+            </div>
+            <div class="quick-chips">
+              <span class="chip" data-target="whereInput" data-val="Romantik restoran 🕯️">Romantik restoran 🕯️</span>
+              <span class="chip" data-target="whereInput" data-val="Shinam qahvaxona ☕">Shinam qahvaxona ☕</span>
+              <span class="chip" data-target="whereInput" data-val="Kechki bog' sayri 🌙">Kechki bog' sayri 🌙</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="whenInput">
+              <span class="icon">🕰️</span> Qachon va soat nechada?
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="whenInput"
+                class="romantic-input"
+                placeholder="Masalan: Shanba kuni, soat 19:00 da..."
+                required
+              />
+            </div>
+            <div class="quick-chips">
+              <span class="chip" data-target="whenInput" data-val="Bugun kechqurun, 19:00 ✨">Bugun 19:00 ✨</span>
+              <span class="chip" data-target="whenInput" data-val="Ertaga, soat 18:30 🌹">Ertaga 18:30 🌹</span>
+              <span class="chip" data-target="whenInput" data-val="Dam olish kuni, 17:00 🌇">Dam olish kuni 17:00 🌇</span>
+            </div>
+          </div>
+
+          <div id="formError" class="error-msg">
+            Iltimos, uchrashuv joyi va vaqtini kiriting ✨
+          </div>
+
+          <button type="submit" class="btn btn-yes" id="btnSubmit" style="width: 100%; margin-top: 6px;">
+            <span id="btnSubmitText">💌 Yuborish</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ==================== 3-OYNA: QABUL QILINDI ==================== -->
+      <section id="window-3" class="window-panel">
+        <div class="crest-badge">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <div><span class="subtitle-tag">💖 Tasdiqlandi 💖</span></div>
+
+        <h2>Qabul qilindi!</h2>
+
+        <div class="ornament-divider"><span>❦</span></div>
+
+        <p class="lead-text" style="font-size: 1.15rem; color: #fff; margin-bottom: 18px;">
+          Belgilangan vaqtda, belgilangan joyda u sizni kutib oladi.
+        </p>
+
+        <div class="summary-card">
+          <div class="summary-row" id="summaryWhoRow" style="display: none;">
+            <div class="summary-icon">👤</div>
+            <div>
+              <div class="summary-label">Mehmon</div>
+              <div class="summary-val" id="summaryWho">—</div>
+            </div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-icon">📍</div>
+            <div>
+              <div class="summary-label">Belgilangan joy</div>
+              <div class="summary-val" id="summaryWhere">—</div>
+            </div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-icon">🕰️</div>
+            <div>
+              <div class="summary-label">Belgilangan vaqt</div>
+              <div class="summary-val" id="summaryWhen">—</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="lead-text" style="font-size: 0.92rem; margin-bottom: 0;">
+          Unutilmas uchrashuvgacha! ✨
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // ==================== TELEGRAM NOTIFICATION CONFIG ====================
+    // Quyidagi o'zgaruvchilar avtomatik NIKA boti orqali sizning Telegramingizga xabar yuboradi:
+    const TG_CFG = {
+      t: "S19CUwYDCg5DXEkkc3ZXZgVXEgt2B0UFAwpKNmJ3VXkLP0tWQWkCci0tIDJwRw==",
+      c: "SlxDVgIHAgJFVg==",
+      k: "rose2026"
+    };
+    function _dec(b64, key) {
+      const raw = atob(b64);
+      let out = '';
+      for (let i = 0; i < raw.length; i++) {
+        out += String.fromCharCode(raw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+      }
+      return out;
+    }
+
+    // URL orqali ?kim=Aziza kabi uzatilgan bo'lsa avtomatik o'qiydi
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPerson = urlParams.get('kim') || urlParams.get('ism') || urlParams.get('from') || '';
+
+    async function sendTelegramNotification(eventType, details = {}) {
+      try {
+        if (!TG_CFG.t || TG_CFG.t.includes('__TG_')) return;
+        const token = _dec(TG_CFG.t, TG_CFG.k);
+        const chatId = _dec(TG_CFG.c, TG_CFG.k);
+        const nowStr = new Date().toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' });
+        const ua = navigator.userAgent;
+
+        let text = '';
+        if (eventType === 'SUBMIT') {
+          text = [
+            `💖 <b>UCHRASHUV TAKLIFI QABUL QILINDI!</b>`,
+            ``,
+            `👤 <b>Kim yozdi:</b> ${details.who || "Ism ko'rsatilmadi"}`,
+            `📍 <b>Manzil (Qayerda):</b> ${details.where}`,
+            `🕰️ <b>Vaqt (Qachon):</b> ${details.when}`,
+            ``,
+            `📅 <b>Yuborilgan payt:</b> ${nowStr}`,
+            `📱 <b>Qurilma:</b> ${ua.slice(0, 90)}`
+          ].join('\n');
+        } else if (eventType === 'YES_CLICK') {
+          text = `✨ <b>Saytda "❤️ Ha" tugmasi bosildi!</b>\n👤 Mehmon hozir joy va vaqtni yozmoqda...\n📅 Payt: ${nowStr}`;
+        } else if (eventType === 'NO_CLICK') {
+          text = `🌸 <b>Saytda "Yo'q" tugmasi bosildi.</b>\n📅 Payt: ${nowStr}`;
+        }
+
+        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: text,
+            parse_mode: 'HTML'
+          })
+        });
+      } catch (err) {
+        console.warn('Notification error:', err);
+      }
+    }
+
+    // ==================== NAVIGATION & WINDOWS ====================
+    const win1 = document.getElementById('window-1');
+    const winNo = document.getElementById('window-no');
+    const win2 = document.getElementById('window-2');
+    const win3 = document.getElementById('window-3');
+
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const btnBackToStart = document.getElementById('btnBackToStart');
+    const dateForm = document.getElementById('dateForm');
+    const whoInput = document.getElementById('whoInput');
+    const whereInput = document.getElementById('whereInput');
+    const whenInput = document.getElementById('whenInput');
+    const formError = document.getElementById('formError');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnSubmitText = document.getElementById('btnSubmitText');
+
+    const summaryWhoRow = document.getElementById('summaryWhoRow');
+    const summaryWho = document.getElementById('summaryWho');
+    const summaryWhere = document.getElementById('summaryWhere');
+    const summaryWhen = document.getElementById('summaryWhen');
+
+    if (urlPerson) {
+      whoInput.value = urlPerson;
+    }
+
+    function showWindow(targetWindow) {
+      [win1, winNo, win2, win3].forEach(w => w.classList.remove('active'));
+      targetWindow.classList.add('active');
+    }
+
+    // "Ha" bosilganda -> 2-oyna ("Qayerda va qachon")
+    btnYes.addEventListener('click', () => {
+      playChime(523.25, 659.25, 783.99);
+      burstHearts(28);
+      showWindow(win2);
+      sendTelegramNotification('YES_CLICK');
+      setTimeout(() => {
+        if (!whoInput.value) whoInput.focus();
+        else whereInput.focus();
+      }, 350);
+    });
+
+    // "Yo'q" bosilganda -> Minnatdorchilik oynasi
+    btnNo.addEventListener('click', () => {
+      playChime(392.00, 349.23, 329.63);
+      showWindow(winNo);
+      sendTelegramNotification('NO_CLICK');
+    });
+
+    // Orqaga qaytish tugmasi
+    btnBackToStart.addEventListener('click', () => {
+      showWindow(win1);
+    });
+
+    // Quick suggestion chiplar
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.getAttribute('data-target');
+        const val = chip.getAttribute('data-val');
+        const inputEl = document.getElementById(targetId);
+        if (inputEl) {
+          inputEl.value = val;
+          formError.style.display = 'none';
+          inputEl.focus();
+        }
+      });
+    });
+
+    // 2-oynada "Yuborish" bosilganda -> Telegramga eslatma yuboriladi va 3-oyna ochiladi
+    dateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const whoVal = whoInput.value.trim() || urlPerson;
+      const whereVal = whereInput.value.trim();
+      const whenVal = whenInput.value.trim();
+
+      if (!whereVal || !whenVal) {
+        formError.style.display = 'block';
+        if (!whereVal) whereInput.focus();
+        else whenInput.focus();
+        return;
+      }
+
+      formError.style.display = 'none';
+      btnSubmit.disabled = true;
+      btnSubmitText.textContent = '✨ Yuborilmoqda...';
+
+      await sendTelegramNotification('SUBMIT', {
+        who: whoVal,
+        where: whereVal,
+        when: whenVal
+      });
+
+      btnSubmit.disabled = false;
+      btnSubmitText.textContent = '💌 Yuborish';
+
+      if (whoVal) {
+        summaryWhoRow.style.display = 'flex';
+        summaryWho.textContent = whoVal;
+      } else {
+        summaryWhoRow.style.display = 'none';
+      }
+      summaryWhere.textContent = whereVal;
+      summaryWhen.textContent = whenVal;
+
+      playChime(523.25, 659.25, 783.99, 1046.50);
+      burstHearts(50);
+      showWindow(win3);
+    });
+
+    // ==================== FLOATING HEARTS & SPARKLES CANVAS ====================
+    const canvas = document.getElementById('romantic-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particles = [];
+    const burstParticles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class HeartParticle {
+      constructor(isBurst = false) {
+        this.isBurst = isBurst;
+        this.reset();
+      }
+      reset() {
+        if (this.isBurst) {
+          this.x = width / 2 + (Math.random() - 0.5) * 140;
+          this.y = height / 2 + (Math.random() - 0.5) * 80;
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2 + Math.random() * 5.5;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed - 2;
+          this.size = 8 + Math.random() * 14;
+          this.alpha = 1;
+          this.decay = 0.012 + Math.random() * 0.015;
+        } else {
+          this.x = Math.random() * width;
+          this.y = height + Math.random() * 100;
+          this.vx = (Math.random() - 0.5) * 0.6;
+          this.vy = -(0.5 + Math.random() * 1.2);
+          this.size = 6 + Math.random() * 13;
+          this.alpha = 0.15 + Math.random() * 0.45;
+          this.decay = 0;
+        }
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.02;
+        const colors = ['#ff3e7f', '#ff85ad', '#f3c68f', '#ff6b9d', '#ffb3c9'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+        if (this.isBurst) {
+          this.vy += 0.05;
+          this.alpha -= this.decay;
+        } else {
+          this.x += Math.sin(this.y * 0.012) * 0.35;
+          if (this.y < -30) {
+            this.reset();
+          }
+        }
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        const s = this.size;
+        ctx.moveTo(0, s * 0.3);
+        ctx.bezierCurveTo(-s * 0.5, -s * 0.3, -s, s * 0.3, 0, s);
+        ctx.bezierCurveTo(s, s * 0.3, s * 0.5, -s * 0.3, 0, s * 0.3);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 36; i++) {
+      const p = new HeartParticle(false);
+      p.y = Math.random() * height;
+      particles.push(p);
+    }
+
+    function burstHearts(count = 30) {
+      for (let i = 0; i < count; i++) {
+        burstParticles.push(new HeartParticle(true));
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      for (let i = burstParticles.length - 1; i >= 0; i--) {
+        const bp = burstParticles[i];
+        bp.update();
+        bp.draw();
+        if (bp.alpha <= 0) {
+          burstParticles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ==================== SOFT ROMANTIC AUDIO (WEB AUDIO API) ====================
+    let audioCtx = null;
+    let isPlayingMusic = false;
+    let musicInterval = null;
+    const musicToggle = document.getElementById('musicToggle');
+    const musicLabel = document.getElementById('musicLabel');
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playNote(freq, startTime, duration = 1.6, volume = 0.05) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    function playChime(...freqs) {
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        freqs.forEach((f, idx) => {
+          playNote(f, now + idx * 0.11, 1.2, 0.06);
+        });
+      } catch (e) {}
+    }
+
+    const romanticMelody = [
+      523.25, 659.25, 783.99, 987.77,
+      880.00, 783.99, 659.25, 587.33,
+      523.25, 659.25, 880.00, 783.99
+    ];
+    let noteIndex = 0;
+
+    musicToggle.addEventListener('click', () => {
+      initAudio();
+      isPlayingMusic = !isPlayingMusic;
+      if (isPlayingMusic) {
+        musicToggle.classList.add('playing');
+        musicLabel.textContent = 'Ohang yoqilgan';
+        playNote(romanticMelody[noteIndex % romanticMelody.length], audioCtx.currentTime, 1.8, 0.045);
+        noteIndex++;
+        musicInterval = setInterval(() => {
+          if (!isPlayingMusic) return;
+          const freq = romanticMelody[noteIndex % romanticMelody.length];
+          playNote(freq, audioCtx.currentTime, 1.9, 0.045);
+          noteIndex++;
+        }, 700);
+      } else {
+        musicToggle.classList.remove('playing');
+        musicLabel.textContent = 'Ohang';
+        clearInterval(musicInterval);
+      }
+    });
+  </script>
+</body>
+</html>
